@@ -1,0 +1,1204 @@
+/* ============================================================
+   Design layer
+   ------------------------------------------------------------
+   One type scale and one icon language for the whole app.
+
+   Rule of thumb for text weight:
+     400  body copy, captions, secondary text
+     500  labels, chips, list titles
+     600  the one sentence that must stand out (bold)
+     700  screen titles and big numbers only
+
+   Loaded after index.css, so these rules refine the screens
+   instead of rewriting them.
+   ============================================================ */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --fs-display: clamp(1.9rem, 5.6vw, 2.6rem);
+  --fs-title: 1.3rem;
+  --fs-lead: 1.02rem;
+  --fs-body: 0.95rem;
+  --fs-small: 0.86rem;
+  --fs-micro: 0.74rem;
+
+  --icon-size: 20px;
+  --track: 0.02em;
+}
+
+/* One font stack everywhere — including anything the browser would otherwise restyle. */
+html,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+legend {
+  font-weight: var(--fw-bold);
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* <strong> means "this is the sentence to remember" — nothing louder than 600. */
+strong,
+b {
+  font-weight: var(--fw-semibold);
+}
+
+.muted,
+.muted-text,
+.tip,
+.stat-label,
+.brand-foot,
+.lesson-goal,
+.grammar-text,
+.correction-why,
+.brand-points li,
+.auth-head p,
+.summary-hero p,
+.hero p,
+.unit-result p,
+.time-up-sheet p,
+.segmented button small,
+.vocab-grid small,
+.examples small,
+.hint-phrases small,
+.memory-stats span,
+.mistake-counter span,
+.score-ring span,
+.review-list p,
+.chip.static {
+  font-weight: var(--fw-regular);
+}
+
+.field > label,
+.field > span,
+.user-bar .user-name,
+.chip,
+.segmented button strong {
+  font-weight: var(--fw-medium);
+}
+
+.btn-primary,
+.btn-ghost,
+.orb-label {
+  font-weight: var(--fw-semibold);
+}
+
+/* Screen titles: one size, one weight, one tracking. */
+.hero h1,
+.summary-hero h1,
+.lesson-hero h1 {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.hero.compact h1 {
+  font-size: clamp(1.65rem, 5.2vw, 2.15rem);
+}
+
+.panel h2,
+.course-progress h2,
+.memory-head h2,
+.auth-head h2,
+.brand-name,
+.app-name,
+.boot-name {
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+}
+
+.auth-head h2,
+.panel h2,
+.course-progress h2,
+.memory-head h2 {
+  font-size: var(--fs-title);
+}
+
+.brand-name {
+  font-size: 1.65rem;
+}
+
+/* ---------- Micro labels ----------
+   Uppercase captions share one size and one weight; tracking alone sets them apart. */
+.brand-tag,
+.label,
+.sub-title,
+.memory-block h3,
+.step,
+.level-badge,
+.next-badge,
+.tag,
+.recommended {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.step {
+  letter-spacing: 0;
+}
+
+/* ---------- Numbers ---------- */
+.stat-value,
+.score-ring strong,
+.memory-stats strong,
+.mistake-counter strong,
+.count,
+.timer-pill {
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-value,
+.score-ring strong,
+.memory-stats strong,
+.mistake-counter strong {
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Captions ---------- */
+.stat-label,
+.tip,
+.brand-foot,
+.auth-note,
+.field-error,
+.caps-hint,
+.correction-why,
+.unit-text small,
+.segmented button small,
+.strength small {
+  font-size: var(--fs-small);
+  letter-spacing: var(--track);
+}
+
+/* Lead paragraphs sit one step above captions. */
+.auth-head p,
+.muted-text,
+.grammar-text {
+  font-size: var(--fs-body);
+}
+
+.hero p,
+.summary-hero p,
+.brand-points li {
+  font-size: var(--fs-lead);
+}
+
+/* ---------- Controls: one height, one rhythm ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 16px;
+  line-height: 1.2;
+}
+
+.chips.small .chip {
+  min-height: 30px;
+  padding: 4px 12px;
+}
+
+.btn-primary,
+.btn-ghost {
+  min-height: 44px;
+  line-height: 1.2;
+}
+
+.btn-primary.large,
+.btn-ghost.large {
+  min-height: 52px;
+}
+
+.btn-primary .icon,
+.btn-ghost .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.user-bar .btn-ghost {
+  min-height: 36px;
+  padding: 6px 14px;
+}
+
+.user-bar .btn-ghost .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Icons ----------
+   Stroke width, colour and alignment stay identical in every screen. */
+.icon {
+  flex: none;
+  vertical-align: middle;
+}
+
+.inline-icon {
+  display: inline-flex;
+  vertical-align: -0.16em;
+  margin-right: 6px;
+}
+
+.point-icon .icon,
+.icon-btn .icon,
+.unit-number .icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+.brand-points li:nth-child(1) .point-icon {
+  color: var(--cyan);
+}
+
+.brand-points li:nth-child(2) .point-icon {
+  color: var(--violet);
+}
+
+.brand-points li:nth-child(3) .point-icon {
+  color: var(--pink);
+}
+
+.stars {
+  gap: 2px;
+}
+
+.stars .icon {
+  width: 1em;
+  height: 1em;
+}
+
+.voice-controls .control .icon {
+  width: 24px;
+  height: 24px;
+}
+
+.control.hint .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.segmented button .icon {
+  justify-self: center;
+  margin-bottom: 2px;
+  color: var(--muted);
+}
+
+.segmented button.active .icon {
+  color: var(--cyan);
+}
+
+.course-progress h2 .icon,
+.panel h2 .icon {
+  color: var(--cyan);
+}
+
+/* ---------- Inline icon rows ---------- */
+.auth-note,
+.tip,
+.lesson-goal,
+.time-up-sheet h3,
+.hero-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-note,
+.tip,
+.time-up-sheet h3 {
+  justify-content: center;
+}
+
+.lesson-goal {
+  align-items: flex-start;
+  line-height: 1.5;
+}
+
+.lesson-goal .icon {
+  margin-top: 3px;
+  color: var(--cyan);
+}
+
+.hero-title {
+  display: inline-flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.hero-title .icon {
+  width: 26px;
+  height: 26px;
+  color: var(--cyan);
+}
+
+.time-up-sheet h3 .icon {
+  width: 22px;
+  height: 22px;
+  color: #ffc84a;
+}
+
+.hint-head .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.toast button .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.memory-icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--glass-strong);
+  border: 1px solid var(--line-strong);
+  color: var(--violet);
+}
+
+.memory-icon .icon {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Card polish ---------- */
+.glass {
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.user-bar {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.course-progress h2,
+.memory-head h2,
+.panel h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.memory-stats div {
+  gap: 1px;
+}
+
+/* ---------- Inline icon + label rows used inside cards ---------- */
+.hint-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.caps-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- Weight normalisation ----------
+   The rules below used to be 700/800 inside index.css; here they join the scale,
+   so size — not weight — carries the hierarchy. */
+.phase-text h2,
+.time-up-sheet h3,
+.unit-result h2,
+.auth-brand h2,
+.level-title {
+  font-weight: var(--fw-bold);
+}
+
+/* The lesson kicker ("3-dars · A1") is metadata, not a headline. */
+.lesson-kicker {
+  font-weight: var(--fw-medium);
+}
+
+.avatar,
+.unit-number,
+.hint-head,
+.feedback-head,
+.patterns li,
+.feedback-correct span,
+.feedback-card.ok {
+  font-weight: var(--fw-semibold);
+}
+
+.hint-head {
+  font-size: 0.92rem;
+}
+
+.feedback-head {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+}
+
+/* The corrected sentence is the one sentence to remember in the review list. */
+.should {
+  font-weight: var(--fw-semibold);
+}
+
+/* ---------- Summary stat cards ---------- */
+.stat {
+  gap: 4px;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: var(--glass-strong);
+  border: 1px solid var(--line-strong);
+  color: var(--cyan);
+}
+
+.stat:nth-child(2) .stat-icon {
+  color: var(--violet);
+}
+
+.stat:nth-child(3) .stat-icon {
+  color: var(--wrong);
+}
+
+
+
+/* ============================================================
+   Visual depth
+   ------------------------------------------------------------
+   index.css defines the palette and the layout; this layer adds
+   the light. Everything below is decoration only — gradients,
+   glows, hairlines and slow ambient motion. No size, spacing or
+   layout rule is redefined, so every screen keeps working and
+   the voice flow is untouched.
+   ============================================================ */
+
+:root {
+  --glow-violet: 139 108 255;
+  --glow-cyan: 56 214 245;
+  --glow-pink: 244 114 182;
+  --glow-red: 255 122 144;
+  --sheen: linear-gradient(180deg, rgb(255 255 255 / 9%), rgb(255 255 255 / 0%) 58%);
+  --hairline: linear-gradient(90deg, rgb(255 255 255 / 0%), rgb(255 255 255 / 18%), rgb(255 255 255 / 0%));
+}
+
+/* ---------- Ambient background ----------
+   Two fixed layers behind everything: a slow aurora, then a faint grid that fades out
+   before the content starts so it never competes with text. */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background:
+    radial-gradient(52rem 34rem at 80% -8%, rgb(var(--glow-cyan) / 13%), transparent 62%),
+    radial-gradient(44rem 30rem at 2% 10%, rgb(var(--glow-violet) / 22%), transparent 64%),
+    radial-gradient(48rem 34rem at 48% 112%, rgb(var(--glow-pink) / 12%), transparent 66%);
+  animation: aurora 28s ease-in-out infinite alternate;
+}
+
+body::after {
+  z-index: -1;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 2.6%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 2.6%) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(130% 82% at 50% -6%, #000 4%, transparent 70%);
+  -webkit-mask-image: radial-gradient(130% 82% at 50% -6%, #000 4%, transparent 70%);
+}
+
+@keyframes aurora {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(0, -2%, 0) scale(1.06);
+  }
+}
+
+/* ---------- Cards: one consistent depth ---------- */
+.glass {
+  position: relative;
+  border-color: var(--line-strong);
+  background:
+    var(--sheen),
+    linear-gradient(180deg, rgb(255 255 255 / 4.5%), rgb(255 255 255 / 1.5%)),
+    rgb(9 10 24 / 42%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 -18px 40px rgb(0 0 0 / 20%) inset,
+    0 22px 48px rgb(2 3 14 / 45%);
+}
+
+/* A hairline of light along the top edge of every panel. */
+.panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.practice-cta {
+  border-color: rgb(var(--glow-violet) / 38%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 0 0 1px rgb(var(--glow-violet) / 12%),
+    0 26px 60px rgb(2 3 14 / 50%),
+    0 0 60px rgb(var(--glow-violet) / 12%);
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary {
+  border: 1px solid rgb(255 255 255 / 18%);
+  background-image: var(--sheen), var(--grad);
+  box-shadow:
+    0 12px 28px rgb(var(--glow-violet) / 42%),
+    0 2px 0 rgb(255 255 255 / 24%) inset,
+    0 -10px 24px rgb(24 10 80 / 35%) inset;
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: saturate(1.12) brightness(1.06);
+  box-shadow:
+    0 18px 44px rgb(var(--glow-violet) / 52%),
+    0 2px 0 rgb(255 255 255 / 28%) inset,
+    0 -10px 24px rgb(24 10 80 / 38%) inset;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow:
+    0 8px 18px rgb(var(--glow-violet) / 38%),
+    0 2px 0 rgb(255 255 255 / 18%) inset,
+    0 -6px 16px rgb(24 10 80 / 32%) inset;
+}
+
+.btn-ghost {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 10px 24px rgb(0 0 0 / 28%);
+}
+
+.btn-ghost:hover {
+  border-color: rgb(var(--glow-violet) / 42%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 12%) inset,
+    0 14px 32px rgb(0 0 0 / 34%),
+    0 0 22px rgb(var(--glow-violet) / 18%);
+}
+
+/* ---------- Controls: chips, tabs, fields ---------- */
+.chip {
+  background-image: var(--sheen);
+  box-shadow: 0 8px 18px rgb(0 0 0 / 22%);
+}
+
+.chip:hover {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 13%), rgb(255 255 255 / 2%));
+  box-shadow:
+    0 10px 24px rgb(0 0 0 / 26%),
+    0 0 0 3px rgb(var(--glow-violet) / 12%);
+}
+
+.chip.active {
+  border-color: rgb(255 255 255 / 22%);
+  background-image: var(--sheen), var(--grad);
+  box-shadow:
+    0 10px 24px rgb(var(--glow-violet) / 40%),
+    0 1px 0 rgb(255 255 255 / 26%) inset;
+}
+
+.segmented {
+  background: rgb(6 7 18 / 55%);
+  border-color: var(--line-strong);
+  box-shadow: 0 14px 30px rgb(0 0 0 / 22%) inset;
+}
+
+.segmented button {
+  background-image: var(--sheen);
+  background-repeat: no-repeat;
+  background-size: 100% 0;
+}
+
+.segmented button.active {
+  background-size: 100% 100%;
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 15%), rgb(255 255 255 / 4%));
+  box-shadow:
+    0 10px 24px rgb(0 0 0 / 35%),
+    0 1px 0 rgb(255 255 255 / 16%) inset,
+    0 0 0 1px rgb(var(--glow-violet) / 30%) inset;
+}
+
+.icon-btn {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 10px 24px rgb(0 0 0 / 28%);
+}
+
+.icon-btn:hover {
+  border-color: rgb(var(--glow-violet) / 40%);
+}
+
+.text-input,
+.custom-duration input {
+  background-image: linear-gradient(180deg, rgb(0 0 0 / 38%), rgb(0 0 0 / 24%));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%) inset;
+}
+
+.text-input:focus,
+.custom-duration input:focus {
+  box-shadow:
+    0 0 0 4px rgb(var(--glow-violet) / 18%),
+    0 0 26px rgb(var(--glow-violet) / 22%),
+    0 2px 8px rgb(0 0 0 / 30%) inset;
+}
+
+/* ---------- Course list ---------- */
+.segmented button {
+  transition: background 0.2s, background-size 0.25s ease, color 0.2s;
+}
+
+.unit-card {
+  overflow: hidden;
+  background-image:
+    radial-gradient(18rem 8rem at 104% -34%, rgb(var(--glow-violet) / 12%), transparent 70%),
+    var(--sheen);
+}
+
+.unit-card:hover {
+  background-image:
+    radial-gradient(18rem 8rem at 104% -34%, rgb(var(--glow-violet) / 22%), transparent 70%),
+    var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 12%) inset,
+    0 -18px 40px rgb(0 0 0 / 20%) inset,
+    0 22px 46px rgb(2 3 14 / 50%),
+    0 0 0 1px rgb(var(--glow-violet) / 32%);
+}
+
+.unit-card.next {
+  background-image:
+    radial-gradient(19rem 9rem at 100% -40%, rgb(var(--glow-cyan) / 22%), transparent 70%),
+    var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 12%) inset,
+    0 22px 46px rgb(2 3 14 / 48%),
+    0 0 0 1px rgb(var(--glow-cyan) / 32%),
+    0 0 50px rgb(var(--glow-cyan) / 14%);
+}
+
+.unit-number {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 10px 22px rgb(0 0 0 / 28%);
+}
+
+.unit-card.next .unit-number {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 26%) inset,
+    0 10px 24px rgb(var(--glow-cyan) / 30%);
+}
+
+.unit-card.done .unit-number {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 8%) inset,
+    0 10px 24px rgb(78 224 166 / 24%);
+}
+
+.course-progress {
+  background-image:
+    radial-gradient(24rem 10rem at 0% -40%, rgb(var(--glow-violet) / 16%), transparent 70%),
+    var(--sheen);
+}
+
+/* ---------- Progress rails ---------- */
+.progress-track,
+.bar {
+  background: rgb(0 0 0 / 42%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 5%),
+    0 2px 8px rgb(0 0 0 / 38%) inset;
+}
+
+.progress-track span {
+  background-image:
+    linear-gradient(90deg, rgb(255 255 255 / 0%) 18%, rgb(255 255 255 / 48%) 50%, rgb(255 255 255 / 0%) 82%),
+    var(--grad);
+  background-size: 42% 100%, auto;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 18px rgb(var(--glow-violet) / 55%);
+  animation: rail-shine 3s linear infinite;
+}
+
+.bar span {
+  background-image:
+    linear-gradient(90deg, rgb(255 255 255 / 0%) 18%, rgb(255 255 255 / 42%) 50%, rgb(255 255 255 / 0%) 82%),
+    linear-gradient(90deg, var(--pink), var(--wrong));
+  background-size: 42% 100%, auto;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 14px rgb(var(--glow-pink) / 45%);
+  animation: rail-shine 3s linear infinite;
+}
+
+@keyframes rail-shine {
+  from {
+    background-position: -60% 0, 0 0;
+  }
+  to {
+    background-position: 165% 0, 0 0;
+  }
+}
+
+/* ---------- Result screen ---------- */
+.score-ring {
+  position: relative;
+  background:
+    radial-gradient(circle, rgb(9 10 24 / 94%) 60%, transparent 61%),
+    conic-gradient(from -90deg, #8b6cff, #38d6f5 calc(var(--score) * 3.6deg), rgb(255 255 255 / 8%) 0);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 7%),
+    0 0 0 12px rgb(255 255 255 / 2%),
+    0 0 70px rgb(var(--glow-violet) / 32%),
+    0 26px 60px rgb(0 0 0 / 38%);
+}
+
+/* A thin arc orbiting the ring. */
+.score-ring::after {
+  content: '';
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgb(var(--glow-violet) / 0%) 0 68%, rgb(var(--glow-cyan) / 55%) 96%, rgb(var(--glow-cyan) / 0%) 100%);
+  mask-image: radial-gradient(circle, transparent 64%, #000 66% 71%, transparent 73%);
+  -webkit-mask-image: radial-gradient(circle, transparent 64%, #000 66% 71%, transparent 73%);
+  animation: spin 9s linear infinite;
+  pointer-events: none;
+}
+
+.stat:nth-child(1) {
+  background-image: radial-gradient(15rem 7rem at 50% -34%, rgb(var(--glow-cyan) / 18%), transparent 70%), var(--sheen);
+}
+
+.stat:nth-child(2) {
+  background-image: radial-gradient(15rem 7rem at 50% -34%, rgb(var(--glow-violet) / 22%), transparent 70%), var(--sheen);
+}
+
+.stat:nth-child(3) {
+  background-image: radial-gradient(15rem 7rem at 50% -34%, rgb(var(--glow-red) / 16%), transparent 70%), var(--sheen);
+}
+
+.stat-icon {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 10%) inset,
+    0 10px 22px rgb(0 0 0 / 30%),
+    0 0 22px rgb(var(--glow-cyan) / 22%);
+}
+
+.stat:nth-child(2) .stat-icon {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 10%) inset,
+    0 10px 22px rgb(0 0 0 / 30%),
+    0 0 22px rgb(var(--glow-violet) / 26%);
+}
+
+.stat:nth-child(3) .stat-icon {
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 10%) inset,
+    0 10px 22px rgb(0 0 0 / 30%),
+    0 0 22px rgb(var(--glow-red) / 24%);
+}
+
+.unit-result.done {
+  background-image: radial-gradient(20rem 9rem at 100% -30%, rgb(78 224 166 / 16%), transparent 70%), var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 10%) inset,
+    0 22px 48px rgb(2 3 14 / 45%),
+    0 0 44px rgb(78 224 166 / 12%);
+}
+
+.memory-stats div {
+  background-image: var(--sheen);
+  box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset, 0 8px 18px rgb(0 0 0 / 24%);
+}
+
+.memory-icon {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 10%) inset,
+    0 10px 24px rgb(0 0 0 / 30%),
+    0 0 26px rgb(var(--glow-violet) / 26%);
+}
+
+.level-badge {
+  background-image: var(--sheen), var(--grad);
+  box-shadow: 0 8px 20px rgb(var(--glow-violet) / 35%), 0 1px 0 rgb(255 255 255 / 26%) inset;
+}
+
+/* ---------- Voice screen ----------
+   The orb, its halo and the controls are the heart of the app, so they get the most light. */
+.orb-glow {
+  filter: blur(46px);
+}
+
+.orb-core {
+  box-shadow:
+    inset 0 -12px 30px rgb(0 0 0 / 32%),
+    inset 0 8px 24px rgb(255 255 255 / 22%),
+    0 26px 64px rgb(0 0 0 / 48%);
+}
+
+/* Newer browsers get a halo in the orb's current phase colour. */
+@supports (color: color-mix(in oklab, white, black)) {
+  .orb-core {
+    box-shadow:
+      inset 0 -12px 30px rgb(0 0 0 / 32%),
+      inset 0 8px 24px rgb(255 255 255 / 22%),
+      0 26px 64px rgb(0 0 0 / 48%),
+      0 0 72px color-mix(in oklab, var(--c1) 45%, transparent);
+  }
+}
+
+/* A single glass highlight so the sphere reads as a solid object. */
+.orb-core::after {
+  content: '';
+  position: absolute;
+  top: 7%;
+  left: 15%;
+  right: 27%;
+  height: 33%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgb(255 255 255 / 62%), rgb(255 255 255 / 0%) 88%);
+  filter: blur(6px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.control {
+  background-image: linear-gradient(180deg, rgb(255 255 255 / 13%), rgb(255 255 255 / 3%));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 14%) inset,
+    0 -8px 18px rgb(0 0 0 / 22%) inset,
+    0 14px 28px rgb(0 0 0 / 35%);
+}
+
+.control:hover:not(:disabled) {
+  border-color: rgb(var(--glow-violet) / 45%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 18%) inset,
+    0 -8px 18px rgb(0 0 0 / 22%) inset,
+    0 18px 34px rgb(0 0 0 / 42%),
+    0 0 26px rgb(var(--glow-violet) / 26%);
+}
+
+.control.end {
+  border-color: rgb(255 255 255 / 20%);
+  background-image:
+    var(--sheen),
+    linear-gradient(135deg, #ff5f7e, #e11d48);
+  box-shadow:
+    0 2px 0 rgb(255 255 255 / 24%) inset,
+    0 -8px 20px rgb(120 0 25 / 40%) inset,
+    0 14px 34px rgb(225 29 72 / 45%);
+  animation: end-pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes end-pulse {
+  50% {
+    box-shadow:
+      0 2px 0 rgb(255 255 255 / 24%) inset,
+      0 -8px 20px rgb(120 0 25 / 40%) inset,
+      0 16px 38px rgb(225 29 72 / 55%),
+      0 0 34px rgb(225 29 72 / 45%);
+  }
+}
+
+.topic-pill,
+.timer-pill {
+  background-image:
+    var(--sheen),
+    linear-gradient(180deg, rgb(17 19 42 / 88%), rgb(9 10 24 / 88%));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 9%) inset,
+    0 12px 26px rgb(0 0 0 / 30%);
+}
+
+.timer-ring {
+  box-shadow: 0 0 12px rgb(var(--glow-cyan) / 55%);
+}
+
+.timer-pill.low .timer-ring {
+  box-shadow: 0 0 14px rgb(255 196 107 / 65%);
+}
+
+.feedback-card {
+  border-color: var(--line-strong);
+  background-image:
+    var(--sheen),
+    linear-gradient(180deg, rgb(21 23 48 / 84%), rgb(12 13 30 / 84%));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 9%) inset,
+    0 24px 52px rgb(0 0 0 / 44%);
+}
+
+.feedback-card.ok {
+  background-image: var(--sheen);
+  box-shadow: 0 14px 30px rgb(0 0 0 / 30%), 0 0 26px rgb(78 224 166 / 18%);
+}
+
+.time-up-sheet {
+  background-image:
+    radial-gradient(24rem 12rem at 50% -40%, rgb(var(--glow-violet) / 22%), transparent 70%),
+    var(--sheen),
+    linear-gradient(180deg, #191b3a, #101228);
+  box-shadow:
+    0 -18px 70px rgb(0 0 0 / 55%),
+    0 0 0 1px rgb(255 255 255 / 5%),
+    0 0 60px rgb(var(--glow-violet) / 16%);
+}
+
+.mistake-counter strong {
+  text-shadow: 0 0 24px rgb(var(--glow-red) / 45%);
+}
+
+.toast {
+  background-image: var(--sheen);
+  box-shadow: 0 20px 44px rgb(0 0 0 / 45%), 0 0 30px rgb(var(--glow-red) / 18%);
+}
+
+/* ---------- Corrections ---------- */
+.wrong {
+  box-shadow: 0 0 0 1px rgb(var(--glow-red) / 22%) inset;
+}
+
+.right {
+  box-shadow:
+    0 0 0 1px rgb(78 224 166 / 24%) inset,
+    0 0 18px rgb(78 224 166 / 14%);
+}
+
+.should {
+  padding-left: 10px;
+  border-left: 2px solid rgb(78 224 166 / 45%);
+}
+
+/* ---------- Auth & home polish ---------- */
+.brand-name,
+.boot-name {
+  background-image: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.auth-brand h2 {
+  text-shadow: 0 16px 44px rgb(var(--glow-violet) / 32%);
+}
+
+.auth-card > header h2 {
+  text-shadow: 0 10px 30px rgb(var(--glow-violet) / 22%);
+}
+
+.point-icon {
+  background-image: var(--sheen);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 9%) inset,
+    0 10px 22px rgb(0 0 0 / 28%);
+}
+
+.brand-points li:nth-child(1) .point-icon {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 9%) inset, 0 10px 22px rgb(0 0 0 / 28%), 0 0 22px rgb(var(--glow-cyan) / 26%);
+}
+
+.brand-points li:nth-child(2) .point-icon {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 9%) inset, 0 10px 22px rgb(0 0 0 / 28%), 0 0 22px rgb(var(--glow-violet) / 30%);
+}
+
+.brand-points li:nth-child(3) .point-icon {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 9%) inset, 0 10px 22px rgb(0 0 0 / 28%), 0 0 22px rgb(var(--glow-pink) / 26%);
+}
+
+.gradient-text {
+  filter: drop-shadow(0 8px 26px rgb(var(--glow-violet) / 38%));
+}
+
+.user-bar {
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(180deg, rgb(255 255 255 / 16%), rgb(255 255 255 / 5%)),
+    linear-gradient(180deg, rgb(19 21 44 / 92%), rgb(10 11 26 / 92%));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 6%) inset,
+    0 14px 34px rgb(0 0 0 / 36%);
+}
+
+.avatar {
+  background-image: var(--sheen), var(--grad);
+  box-shadow: 0 8px 20px rgb(var(--glow-violet) / 35%), 0 1px 0 rgb(255 255 255 / 26%) inset;
+}
+
+.hero-title .icon {
+  filter: drop-shadow(0 4px 14px rgb(var(--glow-cyan) / 45%));
+}
+
+.strength-track i {
+  box-shadow: 0 1px 0 rgb(255 255 255 / 6%) inset;
+}
+
+/* ---------- Scrollbars & selection ---------- */
+::selection {
+  background: rgb(var(--glow-violet) / 38%);
+  color: #fff;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 16%) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 16%);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(255 255 255 / 26%);
+  background-clip: padding-box;
+}
+
+/* ---------- Weight follow-up ----------
+   The places that carry meaning — the tab you are on, the chip you picked, the lesson
+   title, the number you came to read — sit at the bold end of the scale. */
+.unit-text strong,
+.segmented button.active strong,
+.chip.active,
+.stat-value,
+.score-ring strong,
+.memory-stats strong,
+.mistake-counter strong,
+.count,
+.timer-pill {
+  font-weight: var(--fw-bold);
+}
+
+.unit-card.next .unit-text strong,
+.chip.active {
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Motion ----------
+   Screens slide in a step at a time instead of appearing all at once. */
+.panel,
+.stat,
+.unit-card,
+.memory,
+.summary-hero,
+.lesson-hero,
+.course-progress {
+  animation: rise-in 0.5s cubic-bezier(0.2, 0.85, 0.3, 1) both;
+}
+
+.unit-list > li:nth-child(2) .unit-card,
+.stats > *:nth-child(2) {
+  animation-delay: 0.05s;
+}
+
+.unit-list > li:nth-child(3) .unit-card,
+.stats > *:nth-child(3) {
+  animation-delay: 0.1s;
+}
+
+.unit-list > li:nth-child(4) .unit-card {
+  animation-delay: 0.15s;
+}
+
+.unit-list > li:nth-child(5) .unit-card {
+  animation-delay: 0.2s;
+}
+
+.unit-list > li:nth-child(n + 6) .unit-card {
+  animation-delay: 0.25s;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .panel,
+  .stat,
+  .unit-card,
+  .memory,
+  .summary-hero,
+  .lesson-hero,
+  .course-progress,
+  .progress-track span,
+  .bar span,
+  .control.end,
+  .score-ring::after {
+    animation: none;
+  }
+
+  .btn-primary:hover:not(:disabled),
+  .unit-card:hover {
+    transform: none;
+  }
+}
+
